@@ -107,6 +107,8 @@ Immediate local notifications work on all platforms as fallback.
    # All platforms
    flutter run
    ```
+   ![Untitled design](https://github.com/user-attachments/assets/a27f3060-59db-4877-87f6-702d1f1f6d5f)
+
 
 ## Testing Notifications
 
