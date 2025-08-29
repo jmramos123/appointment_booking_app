@@ -1,0 +1,50 @@
+rules_version='2'
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Users can only access their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+      
+      // Users can only access their own appointments
+      match /appointments/{appointmentId} {
+        allow read, write, delete: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Users can only access their own user notifications (nested)
+      match /notifications/{notificationId} {
+        allow read, write, delete: if request.auth != null && request.auth.uid == userId;
+      }
+      
+      // Users can access their own FCM tokens
+      match /fcm_tokens/{tokenId} {
+        allow read, write, delete: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+    
+    // Global notifications collection (for Cloud Functions to process)
+    match /notifications/{notificationId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // FCM tokens ready for production use
+    match /fcm_tokens_ready/{tokenId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Notification requests for backend processing
+    match /notification_requests/{requestId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Appointment reminders
+    match /appointment_reminders/{reminderId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // FCM test logs (for testing)
+    match /fcm_test_logs/{logId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

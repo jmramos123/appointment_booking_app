@@ -1,0 +1,11 @@
+{
+  "name": "appointment-booking-flutter",
+  "version": "1.0.0",
+  "description": "Firebase setup for Flutter appointment booking system",
+  "scripts": {
+    "migrate": "node scripts/firestore_migration.js"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.5.0"
+  }
+}
